@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:HelpCenter.PageModels"
+             xmlns:models="clr-namespace:HelpCenter.Models"
+             xmlns:apimodels="clr-namespace:Common.Models.Database;assembly=Common.Models"
+             xmlns:controls="clr-namespace:HelpCenter.Pages.Controls"
+             xmlns:fonts="clr-namespace:Fonts"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="HelpCenter.Pages.EventListPage"
+             x:DataType="pageModels:EventListPageModel"
+             Shell.NavBarIsVisible="False"
+             >
+
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+                EventName="Appearing"                
+                Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        
+        <Label Text="Доступные мероприятия" 
+               Grid.Row="0"
+               HorizontalOptions="Center" 
+               Margin="0,20,0,10"
+               FontSize="32" 
+               FontAttributes="Bold" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout 
+                BindableLayout.ItemsSource="{Binding Projects}" 
+                Margin="{StaticResource LayoutPadding}" 
+                Spacing="{StaticResource LayoutSpacing}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="apimodels:EventDto">
+                        <Border>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <!-- Title -->
+                                    <RowDefinition Height="Auto" />
+                                    <!-- City and Address -->
+                                    <RowDefinition Height="Auto" />
+                                    <!-- Description -->
+                                    <!-- Icon -->
+                                </Grid.RowDefinitions>
+                                <!--<Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>-->
+                                
+                                 <!--<Label                                        
+                                       Grid.Column="0"
+                                       Text="{Binding Source={RelativeSource AncestorType={x:Type pageModels:EventListPageModel}}, Path=Icon}" 
+                                       x:Name="IconImage"
+                                       FontFamily="{x:Static fonts:FluentUI.FontFamily}" 
+                                       FontSize="48"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource DarkOnLightBackground},Dark={StaticResource LightOnDarkBackground}}"/>-->
+                                
+                                <Label Grid.Row="0" 
+                                   Text="{Binding Title}" 
+                                   FontSize="32" 
+                                   FontAttributes="Bold" 
+                                   HorizontalOptions="Start"/>
+
+                                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
+                                    <Label Text="{Binding City}" FontSize="18" />
+                                    <Label Text=", " FontSize="18" />
+                                    <Label Text="{Binding Address}" FontSize="18" />
+                                </StackLayout>
+
+                                <Label Grid.Row="2"
+                                       Margin="0,40,0,5"
+                                       Text="{Binding Description}" 
+                                       FontSize="16" 
+                                       LineBreakMode="TailTruncation" 
+                                       MaxLines="2" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="Center" />
+
+                            </Grid>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateToProjectCommand, Source={RelativeSource AncestorType={x:Type pageModels:EventListPageModel}}, x:DataType=pageModels:EventListPageModel}" CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <Border.Behaviors>
+                                <toolkit:TouchBehavior
+                                    HoveredBackgroundColor="{StaticResource Gray900}"
+                                    HoveredOpacity="0.8" />
+                            </Border.Behaviors>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+        <controls:AddButton 
+            Grid.Row="2"
+            Command="{Binding AddEventCommand}" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:HelpCenter.PageModels"             
+             xmlns:models="clr-namespace:HelpCenter.Models"
+             xmlns:controls="clr-namespace:HelpCenter.Pages.Controls"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:pullToRefresh="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="HelpCenter.Pages.LoginPage"
+             x:DataType="pageModels:LoginViewModel"
+             Shell.NavBarIsVisible="false">
+
+
+    <Grid VerticalOptions="FillAndExpand" IsVisible="{Binding IsVisible}">
+        <ActivityIndicator IsRunning="{Binding IsBusy}" />
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{Binding LoginMessage, Mode=OneWay}" IsVisible="{Binding TurnLoginMessage, Mode=OneWay}" TextColor="#FF3B30" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                HorizontalTextAlignment="Center" CharacterSpacing="-1.25" LineHeight="1"  Margin="44,0,43,0"/>
+
+                <sf:SfTextInputLayout Hint="Логин" OutlineCornerRadius="30">
+                    <Entry Text="{Binding UserLoginName}" />
+                </sf:SfTextInputLayout>
+
+                        <!--<StackLayout Orientation="Horizontal">
+                            <Image Source="userico.svg" Margin="20,32,6,0"/>
+                            <Entry TextColor="Black" Placeholder="Ник-нейм" HorizontalOptions="FillAndExpand" Text="{Binding UserLoginName}" Margin="0,24,43,0"/>
+                        </StackLayout>-->
+                
+                <sf:SfTextInputLayout Hint="Пароль" OutlineCornerRadius="30" >
+                    <Entry Text="{Binding UserPassword}" IsPassword="True" />
+                </sf:SfTextInputLayout>
+
+                <Button Text="Войти" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="43,12,43,0"
+                            BackgroundColor="#28A745"
+                            BorderColor="#28A745"
+                            CornerRadius="20" Command="{Binding GoToMainPageCommand}">
+
+                    <Button.Behaviors>
+                        <toolkit:TouchBehavior 
+                            HoveredBackgroundColor="{StaticResource Gray900}"
+                            HoveredScale="1.1" />
+                    </Button.Behaviors>
+                    <!--<Button.Background>
+                        <LinearGradientBrush StartPoint="-1,0" EndPoint="1,0">
+                            <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.5"/>
+                            <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>-->
+                </Button>
+                
+                <!--<Label Text="Забыли пароль?" TextColor="{StaticResource NightWatchBlue}" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                                HorizontalTextAlignment="Center" CharacterSpacing="0" LineHeight="1" Margin="92,6,92,0" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>-->
+                
+                <Label Text="Еще не зарегистрированы?" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                            HorizontalTextAlignment="Center" CharacterSpacing="0" LineHeight="1" Margin="57,50,50,0"/>
+                <Button Text="Зарегистрироваться" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="44,10,43,35"
+                            BorderColor="#007BFF"
+                            BackgroundColor="#007BFF"
+                            CornerRadius="20" Command="{Binding GoToCreateAccountCommand}">
+                    <Button.Behaviors>
+                        <toolkit:TouchBehavior
+                        HoveredBackgroundColor="{StaticResource Gray900}"
+                        HoveredScale="1.1" />
+                    </Button.Behaviors>
+
+                    <!--<Button.Background>
+                        <LinearGradientBrush StartPoint="-1,0" EndPoint="1,0">
+                            <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.5"/>
+                            <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>-->
+                </Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

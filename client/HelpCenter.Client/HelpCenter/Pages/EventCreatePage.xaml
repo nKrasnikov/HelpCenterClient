@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:HelpCenter.PageModels"
+             xmlns:models="clr-namespace:HelpCenter.Models"
+             xmlns:pages="clr-namespace:HelpCenter.Pages"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:controls="clr-namespace:HelpCenter.Pages.Controls"
+             xmlns:fonts="clr-namespace:Fonts"
+             x:Class="HelpCenter.Pages.EventCreatePage"
+             x:DataType="pageModels:EventCreatePageModel"
+             Shell.NavBarIsVisible="False"
+             >
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="NormalTagTemplate" x:DataType="models:Tag">
+            <Border StrokeShape="RoundRectangle 22" 
+                        HeightRequest="44" 
+                        StrokeThickness="0"
+                        Background="{AppThemeBinding Light={StaticResource LightSecondaryBackground},Dark={StaticResource DarkSecondaryBackground}}" 
+                        Padding="{OnPlatform '18,0,18,8',Android='18,0,18,0'}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleTagCommand, Source={RelativeSource AncestorType={x:Type pageModels:ProjectDetailPageModel}}, x:DataType=pageModels:ProjectDetailPageModel}" CommandParameter="{Binding .}"/>
+                </Border.GestureRecognizers>
+                <Label Text="{Binding Title}"
+                            TextColor="{AppThemeBinding Light={StaticResource DarkOnLightBackground},Dark={StaticResource LightOnDarkBackground}}"
+                            FontSize="{OnIdiom 16,Desktop=18}" 
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SelectedTagTemplate" x:DataType="models:Tag">
+            <Border StrokeShape="RoundRectangle 22" 
+                        HeightRequest="44" 
+                        StrokeThickness="0"
+                        Background="{Binding DisplayColor}" 
+                        Padding="{OnPlatform '18,0,18,8',Android='18,0,18,0'}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleTagCommand, Source={RelativeSource AncestorType={x:Type pageModels:ProjectDetailPageModel}}, x:DataType=pageModels:ProjectDetailPageModel}" CommandParameter="{Binding .}"/>
+                </Border.GestureRecognizers>
+                <Label Text="{Binding Title}"
+                    TextColor="{AppThemeBinding Light={StaticResource LightBackground},Dark={StaticResource DarkBackground}}" 
+                    FontSize="{OnIdiom 16,Desktop=18}" 
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <pages:ChipDataTemplateSelector 
+            x:Key="ChipDataTemplateSelector"
+            NormalTagTemplate="{StaticResource NormalTagTemplate}"
+            SelectedTagTemplate="{StaticResource SelectedTagTemplate}"/>
+        
+        <!--<ResourceDictionary>
+            --><!-- Цвета --><!--
+            <Color x:Key="PrimaryColor">#6200EE</Color>
+            <Color x:Key="SecondaryColor">#03DAC6</Color>
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+            <Color x:Key="TextColor">#000000</Color>
+
+            --><!-- Стили для кнопок --><!--
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="20,10" />
+            </Style>
+
+            --><!-- Стили для текстовых полей --><!--
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="PlaceholderColor" Value="#999999" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            --><!-- Стили для заголовков --><!--
+            <Style x:Key="Title2" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Margin" Value="0,10,0,5" />
+            </Style>
+        </ResourceDictionary>-->
+    </ContentPage.Resources>
+
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
+
+
+
+
+                <sf:SfTextInputLayout Hint="Название мероприятия" >
+                    <Entry Text="{Binding Title}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout Hint="Город">
+                    <Entry Text="{Binding City}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout Hint="Телефон">
+                    <Entry Text="{Binding Phone}" />
+                </sf:SfTextInputLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <sf:SfTextInputLayout Hint="Дата">
+                        <DatePicker Date="{Binding StartDate}" />
+                    </sf:SfTextInputLayout>
+                    <sf:SfTextInputLayout Hint="Время">
+                        <TimePicker Time="{Binding StartDate}" />
+                    </sf:SfTextInputLayout>
+                </HorizontalStackLayout>
+
+                <sf:SfTextInputLayout  Hint="Адрес мероприятия">
+                    <Entry
+                       Text="{Binding Address}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout  Hint="Описание мероприятия">
+                    <Entry
+                       Text="{Binding Description}" />
+                </sf:SfTextInputLayout>
+
+
+                <Label Text="Иконка мероприятия" Style="{StaticResource Title2}"/>
+                <CollectionView 
+                    HeightRequest="44" Margin="0,0,0,15"
+                    SelectionMode="Single"
+                    
+                    SelectedItem="{Binding Icon}"
+                    ItemsSource="{Binding Icons}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Grid RowDefinitions="Auto,4" RowSpacing="{StaticResource size60}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                                <Setter TargetName="SelectedIndicator" Property="BoxView.IsVisible" Value="False"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter TargetName="SelectedIndicator" Property="BoxView.IsVisible" Value="True"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <Label 
+                                    Text="{Binding .}" 
+                                    x:Name="IconImage"
+                                    FontFamily="{x:Static fonts:FluentUI.FontFamily}" 
+                                    FontSize="24" 
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    TextColor="{AppThemeBinding Light={StaticResource DarkOnLightBackground},Dark={StaticResource LightOnDarkBackground}}"/>
+                                <BoxView x:Name="SelectedIndicator" Color="{StaticResource Primary}" HeightRequest="4" HorizontalOptions="Fill" Grid.Row="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="{StaticResource LayoutSpacing}"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+
+
+                <Label 
+                    Text="Теги" 
+                    Style="{StaticResource Title2}"/>
+                <ScrollView Orientation="Horizontal">
+                    <HorizontalStackLayout 
+                        Spacing="{StaticResource LayoutSpacing}" 
+                        HeightRequest="44" 
+                        Margin="0,0,0,15"
+                        BindableLayout.ItemsSource="{Binding AllTags}" 
+                        BindableLayout.ItemTemplateSelector="{StaticResource ChipDataTemplateSelector}"/>
+                </ScrollView>
+
+                <Button Text="Создать" 
+                    HeightRequest="{OnIdiom 44, Desktop=60}"
+                    Command="{Binding SaveCommand}" />
+
+                
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

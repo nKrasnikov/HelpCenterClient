@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:HelpCenter.PageModels"
+             xmlns:models="clr-namespace:HelpCenter.Models"
+             xmlns:pages="clr-namespace:HelpCenter.Pages"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:controls="clr-namespace:HelpCenter.Pages.Controls"
+             xmlns:fonts="clr-namespace:Fonts"
+             x:Class="HelpCenter.Pages.CreateAccountPage"
+             x:DataType="pageModels:CreateAccountViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.NavBarIsVisible="False"
+             >
+
+    <Grid IsVisible="{Binding IsVisible}">
+        <ActivityIndicator IsRunning="{Binding IsBusy}" />
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
+                <sf:SfTextInputLayout Hint="Логин" OutlineCornerRadius="30">
+                    <Entry Text="{Binding UserLoginName}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout Hint="Пароль" OutlineCornerRadius="30">
+                    <Entry Text="{Binding UserPassword}" IsPassword="True" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout Hint="Повторите пароль" OutlineCornerRadius="30" >
+                    <Entry Text="{Binding UserRepeatPassword}" IsPassword="True" />
+                </sf:SfTextInputLayout>
+
+                <Button Text="Зарегистрироваться" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="43,12,43,0"
+                        BackgroundColor="#007BFF"
+                        CornerRadius="20" Command="{Binding RegisterNewUserCommand}">
+                    <Button.Behaviors>
+                        <toolkit:TouchBehavior
+                            HoveredBackgroundColor="{StaticResource Gray900}"
+                            HoveredScale="1.1" />
+                    </Button.Behaviors>
+                </Button>
+
+                <Button Text="Назад" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="44,10,43,35"
+                        BackgroundColor="#007BFF"
+                        CornerRadius="20" Command="{Binding GoBackCommand}">
+                    <Button.Behaviors>
+                        <toolkit:TouchBehavior
+                                HoveredBackgroundColor="{StaticResource Gray900}"
+                                HoveredScale="1.1" />
+                    </Button.Behaviors>
+                </Button>
+            </VerticalStackLayout>
+
+        </ScrollView>
+    </Grid>
+
+
+</ContentPage>
